@@ -29,14 +29,14 @@ public class View {
         jpanel.setLayout(null);
         jframe.add(jpanel);
 
-        t1.setBounds(75, 25, 70, 25);
+        t1.setBounds(85, 25, 70, 25);
         jpanel.add(t1);
         ㅣ1.setBounds(37, 21, 70, 30);
         jpanel.add(ㅣ1);
 
         t2.setBounds(213, 25, 70, 25);
         jpanel.add(t2);
-        ㅣ2.setBounds(150, 21, 70, 30);
+        ㅣ2.setBounds(170, 21, 70, 30);
         jpanel.add(ㅣ2);
 
         t3.setBounds(352, 25, 80, 25);
@@ -82,15 +82,22 @@ public class View {
                 String num = t3.getText();
 
                 dao.insertitem(new Model(price, name, num));
+                ta.setText("");
+                ArrayList<Model> arr = new ArrayList<Model>();
+                arr = dao.readitem();
 
-                ta.append("입력 완료 \n");
+                ta.append("\t" + "상품명" + "\t" + "가격" + "\t" + "수량\n");
+                ta.append("\t" + "------------------------------------------------------------\n");
 
+                for (int i = 0; i < arr.size(); i++) {
+                    ta.append("\t" + arr.get(i).getprice() + " \t " + arr.get(i).getname() + " \t " + arr.get(i).getnum()
+                            + "\n");
                 t1.setText("");
                 t2.setText("");
                 t3.setText("");
                 t4.setText("");
             }
-        });
+        }});
 
         // 상품 목록 출력
         btn2.addActionListener(new ActionListener() {
@@ -100,7 +107,7 @@ public class View {
                 ArrayList<Model> arr = new ArrayList<Model>();
                 arr = dao.readitem();
 
-                ta.append("\t" + "price" + "\t" + "name" + "\t" + "num\n");
+                ta.append("\t" + "상품명" + "\t" + "가격" + "\t" + "수량\n");
                 ta.append("\t" + "------------------------------------------------------------\n");
 
                 for (int i = 0; i < arr.size(); i++) {
@@ -120,8 +127,17 @@ public class View {
                 String name = t2.getText();
                 String num = t3.getText();
 
-                dao.updateitem(price, num);
-                ta.append("수정 완료 \n");
+                dao.updateitem(price, num, name);
+                ArrayList<Model> arr = new ArrayList<Model>();
+                arr = dao.readitem();
+
+                ta.append("\t" + "상품명" + "\t" + "가격" + "\t" + "수량\n");
+                ta.append("\t" + "------------------------------------------------------------\n");
+
+                for (int i = 0; i < arr.size(); i++) {
+                    ta.append("\t" + arr.get(i).getprice() + " \t " + arr.get(i).getname() + " \t " + arr.get(i).getnum()
+                            + "\n");
+                }
 
                 t1.setText("");
                 t2.setText("");
@@ -136,9 +152,18 @@ public class View {
             public void actionPerformed(ActionEvent arg0) {
                 ta.setText("");
 
-                String price = t1.getText();
-                dao.deleteitem(price);
-                ta.append("삭제 완료 \n");
+                String name = t1.getText();
+                dao.deleteitem(name);
+                ArrayList<Model> arr = new ArrayList<Model>();
+                arr = dao.readitem();
+
+                ta.append("\t" + "상품명" + "\t" + "가격" + "\t" + "수량\n");
+                ta.append("\t" + "------------------------------------------------------------\n");
+
+                for (int i = 0; i < arr.size(); i++) {
+                    ta.append("\t" + arr.get(i).getprice() + " \t " + arr.get(i).getname() + " \t " + arr.get(i).getnum()
+                            + "\n");
+                }
 
                 t1.setText("");
                 t2.setText("");
@@ -158,7 +183,7 @@ public class View {
                 arr = dao.searchitem(content);
                 ta.append(" \n");
 
-                ta.append("\t" + "price" + "\t" + "name" + "\t" + "num\n");
+                ta.append("\t" + "상품명" + "\t" + "가격" + "\t" + "수량\n");
                 ta.append("\t" + "------------------------------------------------------------\n");
 
                 for (int i = 0; i < arr.size(); i++) {
